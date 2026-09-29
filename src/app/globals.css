@@ -1,0 +1,293 @@
+@import 'tailwindcss';
+
+/*
+  SleepGuardian brand tokens.
+
+  Every raw value below is either
+    (a) a colour read straight out of the app repository, or
+    (b) a step/alpha variant of one, clearly marked as derived.
+
+  Sources are listed per token and repeated in DISCOVERY.md.
+  `sg-ink-*` tokens are the app's LIGHT theme, used only inside the faithful
+  interface mockups, which reproduce the real WPF chrome. Where the app's own
+  light theme fails WCAG AA (amber on a white card, SilverSoft labels), the
+  mockups substitute an existing darker app token or `--color-sg-amber-ink`;
+  see DISCOVERY.md §10.
+*/
+
+@theme {
+  /* ---- real app colours ------------------------------------------------- */
+  --color-sg-night: #141a30; /* GenerateIcons/Program.cs, moon-cut + icon backing */
+  --color-sg-night-deep: #0b0f1e; /* derived: night, darkened */
+  --color-sg-night-lift: #1c2440; /* derived: night, lifted  */
+  --color-sg-graphite: #53565a; /* Brand.xaml SilverDark    */
+  --color-sg-silver: #c0c0c0; /* Brand.xaml SilverPrimary */
+  --color-sg-platinum: #e5e4e2; /* Brand.xaml SilverHighlight */
+  --color-sg-silver-soft: #a7a9ac; /* Brand.xaml SilverSoft   */
+  --color-sg-moon: #ffd878; /* GenerateIcons/Program.cs crescent fill */
+  --color-sg-amber: #ffb74d; /* Brand.xaml AmberAccent   */
+  --color-sg-amber-lift: #ffc76d; /* derived: amber, lifted for hover */
+  --color-sg-amber-border: #e89b3c; /* Brand.xaml AmberBorder  */
+  --color-sg-amber-ink: #9a5a00; /* derived: AmberBorder darkened for light panels (4.5:1) */
+  --color-sg-amber-text: #4a2e0a; /* Brand.xaml AmberText    */
+  --color-sg-success: #4caf50; /* Brand.xaml Success       */
+  --color-sg-success-deep: #1b5e20; /* Brand.xaml Heatmap4     */
+
+  /*
+    Theme-switching tokens. The values here are the DARK theme (the site
+    default); `:root[data-theme='light']` below overrides the ones that move.
+    `sg-bg` is the page base, `sg-accent` is every interactive accent
+    (eyebrows, icons, links, focus) — it is separate from `sg-amber` so the
+    amber button *fill* can stay bright in both themes — and `sg-scrim` is the
+    dimmed backdrop behind an overlay mockup.
+  */
+  --color-sg-bg: #0b0f1e; /* derived: night, deepened */
+  --color-sg-accent: #ffb74d; /* Brand.xaml AmberAccent */
+  /* The dimmed desktop an overlay mockup sits on. Carries its own alpha so the
+     light theme can lighten it without a second opacity variable. */
+  --color-sg-scrim: rgb(0 0 0 / 80%); /* LockOverlay.xaml #CC000000 */
+
+  /* app LIGHT theme — mockups only */
+  --color-sg-ink-text: #2e3135; /* Brand.xaml TextPrimary   */
+  --color-sg-ink-muted: #5a5e64; /* Brand.xaml TextSecondary */
+  --color-sg-ink-panel: #f7f7f7; /* Brand.xaml PanelBg       */
+  --color-sg-ink-panel-alt: #ededed; /* Brand.xaml PanelAlt   */
+  --color-sg-ink-card-border: #c0c0c0; /* Brand.xaml CardBorder */
+  --color-sg-ink-line: #a7a9ac; /* Brand.xaml SilverSoft, mock chrome lines */
+  --color-sg-ink-danger-bg: #e8d6d6; /* Brand.xaml DangerBg   */
+  --color-sg-ink-danger-border: #c9a7a7; /* Brand.xaml DangerBorder */
+
+  /* alert reds, read off the overlays */
+  --color-sg-alarm: #e53935; /* CountdownOverlay.xaml TimeoutBar */
+
+  /* heatmap ramp, Brand.xaml Heatmap0..4 */
+  --color-sg-heat-0: #e8e8e8;
+  --color-sg-heat-1: #c8e6c9;
+  --color-sg-heat-2: #81c784;
+  --color-sg-heat-3: #4caf50;
+  --color-sg-heat-4: #1b5e20;
+
+  /* ---- glass surfaces (derived alpha steps of Platinum) ------------------ */
+  --color-sg-surface-1: rgb(229 228 226 / 4%);
+  --color-sg-surface-2: rgb(229 228 226 / 7%);
+  --color-sg-surface-3: rgb(229 228 226 / 11%);
+  --color-sg-hairline: rgb(229 228 226 / 12%);
+  --color-sg-hairline-strong: rgb(192 192 192 / 26%);
+
+  /* ---- type -------------------------------------------------------------- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono:
+    var(--font-jetbrains-mono), ui-monospace, 'Cascadia Mono', Consolas, 'Courier New', monospace;
+
+  /* ---- radii / motion ---------------------------------------------------- */
+  --radius-card: 1.25rem;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/*
+  Theme switching.
+
+  Dark is the default and the value baked into `@theme`. The light theme is a
+  set of variable overrides on `:root[data-theme='light']`. This block is
+  deliberately OUTSIDE any `@layer`: unlayered declarations beat layered ones,
+  so it always wins over the `@theme` defaults regardless of source order.
+
+  The recreation cards never switch — the app has one light theme, and the
+  recreations use the fixed `sg-ink-*` tokens. The only part of a mockup that
+  follows the site is the `sg-scrim` backdrop an overlay card floats on; leaving
+  it at the app's literal `#CC000000` punches a black hole in the light theme.
+
+  `data-theme` is written onto <html> by the inline script in layout.tsx before
+  first paint (no flash), and by the header toggle thereafter. With JavaScript
+  off there is no attribute and the site simply stays dark.
+*/
+:root {
+  color-scheme: dark;
+  /* Backdrop and starfield live in custom properties so a theme can swap the
+     whole layered gradient in one declaration. */
+  --sg-backdrop:
+    radial-gradient(58rem 34rem at 78% -6%, rgb(255 216 120 / 9%), transparent 62%),
+    radial-gradient(46rem 30rem at 8% 4%, rgb(167 169 172 / 9%), transparent 60%),
+    radial-gradient(70rem 44rem at 50% 108%, rgb(255 183 77 / 6%), transparent 65%),
+    linear-gradient(180deg, #10152a 0%, #0b0f1e 46%, #080b16 100%);
+  --sg-star-opacity: 0.5;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --color-sg-bg: #eef1f5;
+  --color-sg-platinum: #1b1e24;
+  --color-sg-silver-soft: #4b4f56;
+  --color-sg-silver: #3a3e45;
+  --color-sg-moon: #8a5a00;
+  --color-sg-accent: #8a5200;
+  /* A near-black scrim is a hole punched in the light page. Wash it with the
+     same ink the light text uses, at a strength that keeps the white card in
+     front of it readable. */
+  --color-sg-scrim: rgb(27 30 36 / 14%);
+
+  --color-sg-surface-1: rgb(20 26 48 / 4%);
+  --color-sg-surface-2: rgb(20 26 48 / 7%);
+  --color-sg-surface-3: rgb(20 26 48 / 11%);
+  --color-sg-hairline: rgb(20 26 48 / 13%);
+  --color-sg-hairline-strong: rgb(20 26 48 / 24%);
+
+  --sg-backdrop:
+    radial-gradient(58rem 34rem at 78% -6%, rgb(255 183 77 / 20%), transparent 62%),
+    radial-gradient(46rem 30rem at 8% 4%, rgb(167 169 172 / 22%), transparent 60%),
+    radial-gradient(70rem 44rem at 50% 108%, rgb(255 183 77 / 12%), transparent 65%),
+    linear-gradient(180deg, #ffffff 0%, #eef1f5 46%, #e2e6ee 100%);
+  --sg-star-opacity: 0;
+}
+
+/* Sun/moon swap for the theme toggle, driven purely by CSS so the control
+   renders identically on the server and the client (no hydration mismatch). */
+.sg-theme-icon-light {
+  display: none;
+}
+:root[data-theme='light'] .sg-theme-icon-light {
+  display: block;
+}
+:root[data-theme='light'] .sg-theme-icon-dark {
+  display: none;
+}
+
+/*
+  The app ships exactly one theme (README.md: "Single silver brand theme, no
+  theme switcher, no dark mode") and its own copy calls the product a night-time
+  tool. This site is therefore dark by default: the night colour is the app's
+  own icon backing (#141A30), and the metallic silvers become the type and
+  surface ramp on top of it. A visitor can switch to a light silver theme that
+  echoes the app's own palette; the app's light theme is reproduced verbatim
+  inside the interface mockups, which never switch.
+*/
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-sg-bg);
+    color: var(--color-sg-platinum);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* Night sky: a fixed, non-interactive backdrop so it never repaints on scroll. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background: var(--sg-backdrop);
+  }
+
+  /* 1px starfield, kept extremely subtle; hidden in the light theme. */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: var(--sg-star-opacity);
+    background-image:
+      radial-gradient(1px 1px at 12% 22%, rgb(229 228 226 / 55%), transparent),
+      radial-gradient(1px 1px at 68% 14%, rgb(229 228 226 / 40%), transparent),
+      radial-gradient(1px 1px at 34% 62%, rgb(229 228 226 / 35%), transparent),
+      radial-gradient(1px 1px at 88% 48%, rgb(229 228 226 / 30%), transparent),
+      radial-gradient(1px 1px at 52% 84%, rgb(229 228 226 / 25%), transparent),
+      radial-gradient(1px 1px at 22% 92%, rgb(229 228 226 / 22%), transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-sg-accent);
+    outline-offset: 3px;
+    border-radius: 0.35rem;
+  }
+
+  ::selection {
+    background: rgb(255 183 77 / 30%);
+    color: var(--color-sg-platinum);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Frosted panel, the one surface treatment used across every section. */
+  .sg-glass {
+    background-color: var(--color-sg-surface-1);
+    border: 1px solid var(--color-sg-hairline);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* Accent hairline used to separate "trusted" callouts from neutral cards. */
+  .sg-rule-amber {
+    background-image: linear-gradient(90deg, var(--color-sg-accent), rgb(255 183 77 / 0%));
+  }
+}
+
+@utility sg-shell {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 78rem;
+  padding-inline: 1.25rem;
+
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* Long unbroken tokens (emails, paths) must never push the layout wide. */
+@utility sg-break {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/*
+  Scaling frame for the interface recreations.
+
+  The mockups are written at a fixed design width using `em` for every
+  dimension. The wrapper establishes a container, and one `cqw` expression on
+  the inner element converts the design width into a font size — so the whole
+  recreation scales fluidly with crisp vector text, no JS, and no
+  `transform: scale` blur.
+*/
+@utility sg-mock {
+  container-type: inline-size;
+  width: 100%;
+}
