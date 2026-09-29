@@ -128,6 +128,28 @@ you also set the variable for the Preview environment. That is harmless — the
 pages are noindex-by-default in practice because the domain does not resolve —
 but set it anyway if you care about share previews.
 
+## Before launch checklist
+
+The site ships in a state that is complete and safe to show, but three things
+must be true before it can be your public launch:
+
+- [ ] `NEXT_PUBLIC_SITE_URL` is set in Vercel (Production, Preview, and
+      Development). Until then every canonical, `sitemap.xml` entry, `robots.txt`
+      line and JSON-LD URL says `localhost`. The production build prints a warning
+      until it is set, so the gap is visible, not silent.
+- [ ] `downloadUrl` in `src/config/site.ts` is set to the published installer
+      URL. Until it is `null`, the download CTA intentionally sends people to email
+      instead of a dead link. Setting it is a one-line change; every download
+      button becomes a direct link automatically.
+- [ ] The Terms and Privacy pages have been reviewed by whoever is legally
+      responsible. They are written from the app's actual licence and behaviour,
+      but they are not lawyer-reviewed.
+
+Two one-strings that must not drift out of sync with the product: if the
+installer gets code-signed, update `download.unsignedNotice` in
+`src/content/landing.ts`; and the whole legal bundle can change as the product
+does, so re-read [`DISCOVERY.md`](./DISCOVERY.md) §12 the day you launch.
+
 ## Design system
 
 Tokens live in `src/app/globals.css` under `@theme`, and each one carries a
