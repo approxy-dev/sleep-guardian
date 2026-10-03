@@ -8,7 +8,7 @@ import { MockFrame } from '@/components/mockups/MockFrame';
  * 7/8 hour length presets, the derived unlock time in both forms, the preview
  * line, and the immutability note.
  *
- * The values shown (22:00 -> 06:00, 8 hours, every day) are the app's own
+ * The values shown (22:00 -> 05:00, 7 hours, every day) are the app's own
  * documented defaults, not invented ones.
  */
 export function ConfirmDialogMock() {
@@ -21,7 +21,7 @@ export function ConfirmDialogMock() {
           boxShadow: '0 12px 3px rgb(0 0 0 / 0.35)',
         }}
         role="img"
-        aria-label="The confirmation dialog: shutdown at 10:00 PM, 24 hour, eight hours, unlock at 6:00 AM, every day."
+        aria-label="The confirmation dialog: shutdown at 10:00 PM, 24 hour, seven hours, unlock at 5:00 AM, every day."
       >
         {/* title bar */}
         <div className="flex items-center justify-between border-b border-black/5 px-[0.875em] py-[0.625em]">
@@ -56,10 +56,10 @@ export function ConfirmDialogMock() {
           <div>
             <p className="text-[0.6875rem] text-sg-ink-muted">Curfew length</p>
             <div className="mt-[0.375em] flex gap-[0.375em]">
-              <span className="rounded-[5px] border border-sg-ink-card-border bg-sg-ink-panel px-[0.75em] py-[0.3125em] text-[0.75rem] font-semibold text-sg-ink-text">
+              <span className="rounded-[5px] border border-sg-amber-border bg-sg-amber px-[0.75em] py-[0.3125em] text-[0.75rem] font-semibold text-sg-amber-text">
                 7 hours
               </span>
-              <span className="rounded-[5px] border border-sg-amber-border bg-sg-amber px-[0.75em] py-[0.3125em] text-[0.75rem] font-semibold text-sg-amber-text">
+              <span className="rounded-[5px] border border-sg-ink-card-border bg-sg-ink-panel px-[0.75em] py-[0.3125em] text-[0.75rem] font-semibold text-sg-ink-text">
                 8 hours
               </span>
             </div>
@@ -67,13 +67,13 @@ export function ConfirmDialogMock() {
 
           <div>
             <p className="text-[0.6875rem] text-sg-ink-muted">Unlock at</p>
-            <p className="text-[1.25rem] font-bold leading-tight text-sg-ink-text">6:00 AM</p>
-            <p className="mt-[0.125em] text-[0.75rem] text-sg-ink-muted">06:00 (next morning)</p>
+            <p className="text-[1.25rem] font-bold leading-tight text-sg-ink-text">5:00 AM</p>
+            <p className="mt-[0.125em] text-[0.75rem] text-sg-ink-muted">05:00 (next morning)</p>
           </div>
 
           <div className="rounded-[8px] border border-sg-ink-line bg-sg-ink-panel px-[0.75em] py-[0.5em]">
             <p className="text-[0.8125rem] font-semibold text-sg-ink-text">
-              10:00 PM today &rarr; 6:00 AM tomorrow
+              10:00 PM today &rarr; 5:00 AM tomorrow
             </p>
             <p className="mt-[0.25em] text-[0.6875rem] text-sg-ink-muted">Repeats every day</p>
           </div>

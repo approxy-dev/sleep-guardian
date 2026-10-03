@@ -7,8 +7,8 @@ import { MockFrame } from '@/components/mockups/MockFrame';
  * silver gradient chrome, the custom title bar, the four tabs, and the Next
  * Curfew / Current Streak / Emergency Pass / Quick Set Curfew cards.
  *
- * The values are the app's documented defaults (shutdown 22:00, unlock 06:00,
- * 8 hours). A streak number is shown because the product records one; it is
+ * The values are the app's documented defaults (shutdown 22:00, unlock 05:00,
+ * 7 hours). A streak number is shown because the product records one; it is
  * illustrative, not a claim about anyone's actual progress.
  */
 export function DashboardMock() {
@@ -34,7 +34,7 @@ export function DashboardMock() {
           boxShadow: '0 12px 3px rgb(0 0 0 / 0.35)',
         }}
         role="img"
-        aria-label="The SleepGuardian dashboard: next curfew tonight at 10 PM, a current streak of 12 days, the emergency pass, and a quick set control defaulting to 10 PM for eight hours."
+        aria-label="The SleepGuardian dashboard: next curfew tonight at 10 PM, a current streak of 12 days, the emergency pass, and a quick set control defaulting to 10 PM for seven hours."
       >
         {/* title bar */}
         <div className="flex items-center justify-between px-[0.875em] py-[0.6875em]">
@@ -76,7 +76,7 @@ export function DashboardMock() {
               Tonight at 10:00 PM
             </p>
             <p className="mt-[0.25em] text-[0.75rem] text-sg-ink-muted">
-              Unlocks at 6:00 AM &middot; 8-hour window
+              Unlocks at 5:00 AM &middot; 7-hour window
             </p>
           </Card>
 
@@ -108,7 +108,7 @@ export function DashboardMock() {
           <Card>
             <Label>Emergency Pass</Label>
             <p className="mt-[0.375em] text-[0.8125rem] text-sg-ink-muted">
-              Not available yet. Earned after 8 compliant nights.
+              Available &mdash; one 60-minute emergency unlock per week.
             </p>
             <span className="mt-[0.75em] inline-block rounded-[5px] border border-sg-amber-border bg-sg-ink-panel px-[0.875em] py-[0.4375em] text-[0.75rem] font-semibold text-sg-ink-muted">
               Use 1-Hour Emergency
@@ -120,10 +120,10 @@ export function DashboardMock() {
             <Label>Quick Set Curfew</Label>
             <div className="mt-[0.5em] grid grid-cols-2 gap-[0.5em]">
               <Field label="Shutdown at" value="10:00 PM" />
-              <Field label="For how long" value="8 hours" />
+              <Field label="For how long" value="7 hours" />
             </div>
             <p className="mt-[0.5em] text-[0.75rem] text-sg-ink-muted">
-              Unlocks at 6:00 AM the next morning
+              Unlocks at 5:00 AM the next morning
             </p>
             <div className="mt-[0.625em] flex gap-[0.5em]">
               <span className="rounded-[5px] border border-sg-ink-card-border bg-sg-ink-panel px-[0.875em] py-[0.4375em] text-[0.75rem] font-semibold text-sg-ink-text">

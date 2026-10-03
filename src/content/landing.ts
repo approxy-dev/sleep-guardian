@@ -19,6 +19,7 @@ import {
   Quote,
   ShieldCheck,
 } from 'lucide-react';
+import { siteConfig } from '../config/site';
 
 export interface Step {
   readonly number: string;
@@ -35,7 +36,7 @@ export const hero = {
   primaryCta: 'Download for Windows',
   secondaryCta: 'See how it works',
   /** The countdown in the hero lock-overlay recreation. */
-  countdown: { unlockLabel: 'Unlocks at', time: '06:00', until: 'until morning' },
+  countdown: { unlockLabel: 'Unlocks at', time: '05:00', until: 'until morning' },
 } as const;
 
 export const problem = {
@@ -113,12 +114,12 @@ export const features: {
     {
       icon: AlarmClock,
       title: 'Earned weekly grace hour',
-      body: 'One extra hour, once a week, available only after eight compliant nights. Not a shrug at the rules — a reward for having followed them.',
+      body: 'One extra hour, once a week, earned when your streak target is seven days or more and your first night is on record. Not a shrug at the rules — a reward for having followed them.',
     },
     {
       icon: BellRing,
       title: 'Advance warnings',
-      body: 'Tray notices at 30, 10, 5 and 2 minutes out, then a full-screen countdown in the last minute. Shutdown is never a total surprise.',
+      body: 'Tray notices at 30, 10, 5, 2 and 1 minutes out, then a full-screen countdown in the last minute. Its opacity is adjustable in Settings (30\u2013100%), and the final ten seconds are always fully opaque.',
     },
     {
       icon: CalendarDays,
@@ -138,7 +139,7 @@ export const features: {
     {
       icon: ShieldCheck,
       title: 'Resilient by design',
-      body: 'Enforcement runs from a Windows service, backed by a per-minute watchdog. Closing the tray app, killing the process, or switching the service off does not end it.',
+      body: 'Enforcement runs from a Windows service, backed by a per-minute watchdog. Closing the tray app, killing the process, or switching the service off does not end it — and if the service ever stops reporting, the lock says so rather than pretending nothing happened.',
     },
     {
       icon: Quote,
@@ -148,7 +149,7 @@ export const features: {
     {
       icon: Lock,
       title: 'Blocks the easy escapes',
-      body: 'During the lock, Task Manager and the Windows key shortcuts are disabled for your account, and your previous policy settings are restored the moment it lifts.',
+      body: 'During the lock, Task Manager and the Windows key shortcuts are disabled for your account, and your previous policy settings are restored the moment it lifts. Those writes usually need an elevated dashboard, and when they have not taken effect the lock names exactly which ones failed instead of implying the machine is sealed.',
     },
     {
       icon: Fingerprint,
@@ -177,8 +178,8 @@ export const graceHour = {
       body: 'The week starts on Monday. One pass per week, and it does not accumulate.',
     },
     {
-      label: 'Eight compliant nights first',
-      body: 'Eligibility is measured against nights you actually completed, not against the target you configured. A brand-new install has no pass available, and the countdown never appears, until eight compliant nights are on record.',
+      label: 'A 7-day target — and a finished first night',
+      body: 'Eligibility takes two halves, both checked inside the service: the streak target you configured must be seven days or more, and a first compliant night must actually be on record. So the pass is never available on the day you first set a curfew — it appears from the second day onward — and a five-day target never unlocks it at all.',
     },
     {
       label: 'A night you use it on is neutral',
@@ -194,7 +195,7 @@ export const graceHour = {
     },
   ] as const,
   footnote:
-    'If no pass is available, the countdown is not shown at all and the machine shuts down on the minute.',
+    'If no pass is available the lock does not dangle one in front of you — it says exactly why (target too small, first night not yet on record, or the weekly pass already spent), and the machine shuts down on the minute.',
 } as const;
 
 export const expectations = {
@@ -282,7 +283,7 @@ export const faq: {
     {
       question: 'What if I genuinely need my PC during curfew?',
       answer:
-        'That is what the weekly grace hour is for: one extra hour, once a week, available after eight compliant nights. It extends the curfew by an hour; it does not lift enforcement.',
+        'That is what the weekly grace hour is for: one extra hour, once a week, available once your streak target is seven days or more and your first night is on record. It extends the curfew by an hour; it does not lift enforcement.',
     },
     {
       question: 'Does it need a password?',
@@ -319,11 +320,11 @@ export const download = {
   steps: [
     {
       title: 'Run the installer',
-      body: 'SleepGuardianSetup_1.6.0.exe, installed as Administrator. Windows will ask you to confirm, because the app registers a service and a scheduled task.',
+      body: `${siteConfig.fileName}, installed as Administrator. Windows will ask you to confirm, because the app registers a service and a scheduled task.`,
     },
     {
       title: 'Set your first curfew',
-      body: 'The dashboard opens with a bedtime and an 8 hour window already filled in. Adjust, confirm, and the service picks it up within seconds.',
+      body: 'The dashboard opens with a 10 PM bedtime and a 7 hour window already filled in. Adjust, confirm, and the service picks it up within seconds.',
     },
     {
       title: 'Close the dashboard',

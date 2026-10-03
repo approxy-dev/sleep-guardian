@@ -27,7 +27,7 @@ export interface LegalPage {
  * the document rather than about the product, so it is set by hand and has no
  * source file — bump it whenever the copy below changes.
  */
-const UPDATED = '2026-09-29';
+const UPDATED = '2026-10-03';
 
 export const privacy: LegalPage = {
   title: 'Privacy',
@@ -65,7 +65,7 @@ export const privacy: LegalPage = {
     {
       heading: 'Windows itself',
       paragraphs: [
-        'The app writes a few entries to standard Windows locations, all of which are removed when you uninstall: a per-user policy key while the lock is up, a signed snapshot of the lock decision under HKEY_LOCAL_MACHINE, and scheduled-task registrations for the boot guard and the watchdog.',
+        'The app writes a few entries to standard Windows locations, all of which are removed when you uninstall: a per-user policy key while the lock is up, an HMAC-signed mirror of the lock decision under HKEY_LOCAL_MACHINE, and scheduled-task registrations for the boot guard and the watchdog.',
       ],
     },
     {
@@ -172,7 +172,7 @@ export const security: LegalPage = {
         'Closing the tray app or killing the interface process. Enforcement does not live in the interface.',
         'Stopping or reconfiguring the service with the ordinary tools. The service descriptor removes the rights to stop it, change its configuration, or delete it from administrator accounts, and the watchdog re-enables it within a minute if something running as the system account does manage to.',
         'Other local users on the same machine. Every state-changing request is re-authorised inside the service against the stored password hash, so a password typed into a window proves nothing on its own, and a hand-crafted request with no password is rejected and logged as an authentication failure.',
-        'Tampering with the local database. The directory is ACL-locked against the interactive user, and the authoritative lock decision is mirrored outside the database under a signed snapshot, so editing the database does not on its own unlock you.',
+        'Tampering with the local database. The directory is ACL-locked against the interactive user, and the authoritative lock decision is mirrored outside the database under an HMAC-signed mirror, so editing the database does not on its own unlock you.',
         'A crafted request to clear the lock state. That request is only honoured during a genuine, unspent grace hour, checked inside the service.',
         'Opportunistic malware running with normal user rights, which cannot reach the service, the sealed runtime, or the signed mirror.',
       ],
@@ -195,7 +195,7 @@ export const security: LegalPage = {
     {
       heading: 'The weekly grace hour',
       paragraphs: [
-        'The one deliberate escape valve. One hour, once per calendar week, available only after eight compliant nights have actually been completed. Spending it extends the relevant curfew by an hour; the night is recorded as neutral for your streak rather than advancing or breaking it. It requires your admin password if you have set one, and asks for nothing if you have not.',
+        'The one deliberate escape valve. One hour, once per calendar week, earned in two parts: the streak target you configured must be seven days or more, and a first compliant night must actually be on record — so it is never available on the day you first set a curfew, appears from the second day onward, and a five-day target never unlocks it. Spending it extends the relevant curfew by an hour; the night is recorded as neutral for your streak rather than advancing or breaking it. It requires your admin password if you have set one, and asks for nothing if you have not.',
       ],
     },
     {

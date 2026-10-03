@@ -40,7 +40,7 @@ export function CountdownMock() {
                 SAVE YOUR WORK NOW
               </p>
               <p className="mt-[0.5em] text-[0.75em] text-sg-ink-muted">
-                Unlocks at 06:00 &middot; 8-hour window
+                Unlocks at 05:00 &middot; 7-hour window
               </p>
             </div>
           </div>

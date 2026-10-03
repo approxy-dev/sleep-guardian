@@ -141,7 +141,7 @@ function New-SocialCard {
   # footer strip
   $g.FillRectangle($silverB, $x, 494, 40, 1)
   $g.DrawString('SleepGuardian', $uiSemi, $platinumB, $x, 508)
-  $g.DrawString('22:00  >  06:00', $mono, $amberB, 470, 508)
+  $g.DrawString('22:00  >  05:00', $mono, $amberB, 470, 508)
 
   # crescent mark, same construction as assets/app.ico
   $s = 1.9

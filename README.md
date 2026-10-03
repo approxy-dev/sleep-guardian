@@ -76,7 +76,7 @@ The rule is that a `null` value hides its UI element. A component never renders
 a fact, give it a type that allows `null`, and guard the render.
 
 ```ts
-appVersion: '1.6.0',        // shown
+appVersion: '1.10.2',       // shown
 supportedOS: 'Windows 10 or later, 64-bit',
 downloadUrl: null,          // hides the direct link; CTA falls back to email
 ```

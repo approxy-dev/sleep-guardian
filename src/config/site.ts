@@ -66,8 +66,8 @@ export const siteConfig = {
   downloadUrl,
 
   /** Product facts. `null` renders nothing. */
-  appVersion: '1.6.0',
-  fileName: 'SleepGuardianSetup_1.6.0.exe',
+  appVersion: '1.10.2',
+  fileName: 'SleepGuardianSetup_1.10.2.exe',
   fileSize: '125 MB',
   supportedOS: 'Windows 10 or later, 64-bit',
 
