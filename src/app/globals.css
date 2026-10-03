@@ -34,12 +34,13 @@
   --color-sg-success-deep: #1b5e20; /* Brand.xaml Heatmap4     */
 
   /*
-    Theme-switching tokens. The values here are the DARK theme (the site
-    default); `:root[data-theme='light']` below overrides the ones that move.
-    `sg-bg` is the page base, `sg-accent` is every interactive accent
-    (eyebrows, icons, links, focus) — it is separate from `sg-amber` so the
-    amber button *fill* can stay bright in both themes — and `sg-scrim` is the
-    dimmed backdrop behind an overlay mockup.
+    Theme-switching tokens. The values here are the DARK theme;
+    `:root[data-theme='dark']` below re-states them, and `:root` itself carries
+    the LIGHT theme that the site opens in. `sg-bg` is the page base,
+    `sg-accent` is every interactive accent (eyebrows, icons, links, focus) — it
+    is separate from `sg-amber` so the amber button *fill* can stay bright in
+    both themes — and `sg-scrim` is the dimmed backdrop behind an overlay
+    mockup.
   */
   --color-sg-bg: #0b0f1e; /* derived: night, deepened */
   --color-sg-accent: #ffb74d; /* Brand.xaml AmberAccent */
@@ -87,10 +88,10 @@
 /*
   Theme switching.
 
-  Dark is the default and the value baked into `@theme`. The light theme is a
-  set of variable overrides on `:root[data-theme='light']`. This block is
-  deliberately OUTSIDE any `@layer`: unlayered declarations beat layered ones,
-  so it always wins over the `@theme` defaults regardless of source order.
+  Light is the default and lives on plain `:root`; dark is a set of variable
+  overrides on `:root[data-theme='dark']`. Both blocks are deliberately OUTSIDE
+  any `@layer`: unlayered declarations beat layered ones, so they always win over
+  the `@theme` defaults regardless of source order.
 
   The recreation cards never switch — the app has one light theme, and the
   recreations use the fixed `sg-ink-*` tokens. The only part of a mockup that
@@ -99,21 +100,9 @@
 
   `data-theme` is written onto <html> by the inline script in layout.tsx before
   first paint (no flash), and by the header toggle thereafter. With JavaScript
-  off there is no attribute and the site simply stays dark.
+  off there is no attribute and the site simply stays light.
 */
 :root {
-  color-scheme: dark;
-  /* Backdrop and starfield live in custom properties so a theme can swap the
-     whole layered gradient in one declaration. */
-  --sg-backdrop:
-    radial-gradient(58rem 34rem at 78% -6%, rgb(255 216 120 / 9%), transparent 62%),
-    radial-gradient(46rem 30rem at 8% 4%, rgb(167 169 172 / 9%), transparent 60%),
-    radial-gradient(70rem 44rem at 50% 108%, rgb(255 183 77 / 6%), transparent 65%),
-    linear-gradient(180deg, #10152a 0%, #0b0f1e 46%, #080b16 100%);
-  --sg-star-opacity: 0.5;
-}
-
-:root[data-theme='light'] {
   color-scheme: light;
 
   --color-sg-bg: #eef1f5;
@@ -133,6 +122,8 @@
   --color-sg-hairline: rgb(20 26 48 / 13%);
   --color-sg-hairline-strong: rgb(20 26 48 / 24%);
 
+  /* Backdrop and starfield live in custom properties so a theme can swap the
+     whole layered gradient in one declaration. */
   --sg-backdrop:
     radial-gradient(58rem 34rem at 78% -6%, rgb(255 183 77 / 20%), transparent 62%),
     radial-gradient(46rem 30rem at 8% 4%, rgb(167 169 172 / 22%), transparent 60%),
@@ -141,15 +132,49 @@
   --sg-star-opacity: 0;
 }
 
+/*
+  The dark theme restates every token that moves. The `:root` block above is
+  unlayered and would otherwise still win in dark mode, so this block exists to
+  override it -- it wins on specificity (attribute selector plus pseudo-class).
+  The dark values are the ones baked into `@theme`, kept here verbatim so the
+  two themes cannot drift apart.
+*/
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-sg-bg: #0b0f1e;
+  --color-sg-platinum: #e5e4e2;
+  --color-sg-silver-soft: #a7a9ac;
+  --color-sg-silver: #c0c0c0;
+  --color-sg-moon: #ffd878;
+  --color-sg-accent: #ffb74d;
+  --color-sg-scrim: rgb(0 0 0 / 80%);
+
+  --color-sg-surface-1: rgb(229 228 226 / 4%);
+  --color-sg-surface-2: rgb(229 228 226 / 7%);
+  --color-sg-surface-3: rgb(229 228 226 / 11%);
+  --color-sg-hairline: rgb(229 228 226 / 12%);
+  --color-sg-hairline-strong: rgb(192 192 192 / 26%);
+
+  --sg-backdrop:
+    radial-gradient(58rem 34rem at 78% -6%, rgb(255 216 120 / 9%), transparent 62%),
+    radial-gradient(46rem 30rem at 8% 4%, rgb(167 169 172 / 9%), transparent 60%),
+    radial-gradient(70rem 44rem at 50% 108%, rgb(255 183 77 / 6%), transparent 65%),
+    linear-gradient(180deg, #10152a 0%, #0b0f1e 46%, #080b16 100%);
+  --sg-star-opacity: 0.5;
+}
+
 /* Sun/moon swap for the theme toggle, driven purely by CSS so the control
-   renders identically on the server and the client (no hydration mismatch). */
-.sg-theme-icon-light {
+   renders identically on the server and the client (no hydration mismatch).
+   The icon shows the theme that is *currently* applied, and the default is now
+   light, so the sun is what shows when there is no `data-theme` attribute. */
+.sg-theme-icon-dark {
   display: none;
 }
-:root[data-theme='light'] .sg-theme-icon-light {
+:root[data-theme='dark'] .sg-theme-icon-dark {
   display: block;
 }
-:root[data-theme='light'] .sg-theme-icon-dark {
+:root[data-theme='dark'] .sg-theme-icon-light {
   display: none;
 }
 
@@ -194,13 +219,17 @@
 }
 
 /*
-  The app ships exactly one theme (README.md: "Single silver brand theme, no
-  theme switcher, no dark mode") and its own copy calls the product a night-time
-  tool. This site is therefore dark by default: the night colour is the app's
-  own icon backing (#141A30), and the metallic silvers become the type and
-  surface ramp on top of it. A visitor can switch to a light silver theme that
-  echoes the app's own palette; the app's light theme is reproduced verbatim
-  inside the interface mockups, which never switch.
+  Light is the default: it is the theme the app's own interface actually ships
+  (Brand.xaml), so a visitor sees the product the way it really looks. The dark
+  theme is kept as an equal option and is built from the app's icon backing
+  (#141A30), which is why the two themes are genuine opposites rather than one
+  being a filter of the other.
+
+  The recreation cards never switch either way — the app has exactly one theme
+  (README.md: "Single silver brand theme, no theme switcher, no dark mode"), and
+  the recreations use the fixed `sg-ink-*` tokens. The only part of a mockup that
+  follows the site is the `sg-scrim` backdrop an overlay card floats on; leaving
+  it at the app's literal `#CC000000` punches a black hole in the light theme.
 */
 
 @layer base {

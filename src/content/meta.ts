@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { siteConfig } from '@/config/site';
-import { THEME_COLORS } from '@/config/theme';
+import { DEFAULT_THEME, THEME_COLORS } from '@/config/theme';
 
 /** Page-level description and social copy. */
 export const meta = {
@@ -49,7 +49,16 @@ export function buildMetadata({
   };
 }
 
-export const themeColors: { media: string; color: string }[] = [
-  { media: '(prefers-color-scheme: light)', color: THEME_COLORS.light },
-  { media: '(prefers-color-scheme: dark)', color: THEME_COLORS.dark },
-];
+/**
+ * Browser-chrome colour.
+ *
+ * One unscoped meta rather than the usual `prefers-color-scheme` pair. The site
+ * theme deliberately ignores the OS setting, so an OS-driven meta would colour
+ * the address bar to match the visitor's system rather than the page they are
+ * actually looking at.
+ *
+ * The pre-paint script in theme.ts rewrites this to whichever theme really gets
+ * applied, and the header toggle keeps it in step afterwards. With JavaScript
+ * off it stays here -- which is also the CSS default, so the two still agree.
+ */
+export const themeColors: string = THEME_COLORS[DEFAULT_THEME];
