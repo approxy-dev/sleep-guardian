@@ -9,13 +9,26 @@ import type { NextConfig } from 'next';
  * purely informational site. See README.md -> "Content Security Policy" for the
  * reasoning and the hardening path if this site ever gains per-user content.
  */
+/**
+ * Script policy.
+ *
+ * Next's development runtime compiles modules with `eval()`/`new Function`
+ * (webpack/turbopack HMR). Without 'unsafe-eval' the browser blocks that code,
+ * the app never hydrates, and every client component silently dies — which is
+ * exactly how the header theme toggle stopped responding and the scroll reveals
+ * were left stranded at `opacity: 0`. Production bundles are eval-free, so the
+ * deployed policy stays strict.
+ */
+const isDev = process.env.NODE_ENV === 'development';
+const scriptSrc = isDev ? "'self' 'unsafe-inline' 'unsafe-eval'" : "'self' 'unsafe-inline'";
+
 const csp = [
   "default-src 'self'",
   "base-uri 'self'",
   "object-src 'none'",
   "frame-ancestors 'none'",
   "form-action 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src ${scriptSrc}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self'",

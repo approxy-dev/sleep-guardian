@@ -89,14 +89,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           `suppressHydrationWarning` on <html> acknowledges that.
         */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-        {/*
-          If scripts never run, every scroll reveal must still be visible.
-          Framer Motion sets its initial state inline, so without this a visitor
-          with JavaScript disabled would see blank sections.
-        */}
-        <noscript>
-          <style>{`[style*="opacity:0"],[style*="opacity: 0"]{opacity:1!important;transform:none!important}`}</style>
-        </noscript>
         <script
           type="application/ld+json"
           // Static, developer-authored object with no user input.

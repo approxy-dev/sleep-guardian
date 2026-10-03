@@ -59,7 +59,7 @@ export const siteConfig = {
   name: 'SleepGuardian',
   tagline: 'Sleep on time. No excuses.',
   developer: 'Approxy',
-  contactEmail: 'approxy-dev@gmail.com',
+  contactEmail: 'approxydev@gmail.com',
   siteUrl,
 
   /** Absolute download link, or `null` when the release is not published yet. */

@@ -140,11 +140,11 @@ limit the developers themselves state.
 
 ## 9. Licensing and contact
 
-| Fact                                    | Source                                                 |
-| --------------------------------------- | ------------------------------------------------------ |
-| Personal, non-commercial use            | `LICENSE.txt` — "SleepGuardian — Personal Use License" |
-| Copyright year 2026                     | `LICENSE.txt`                                          |
-| Contact address `approxy-dev@gmail.com` | owner-supplied                                         |
+| Fact                                   | Source                                                 |
+| -------------------------------------- | ------------------------------------------------------ |
+| Personal, non-commercial use           | `LICENSE.txt` — "SleepGuardian — Personal Use License" |
+| Copyright year 2026                    | `LICENSE.txt`                                          |
+| Contact address `approxydev@gmail.com` | owner-supplied                                         |
 
 The Terms page adapts `LICENSE.txt` rather than replacing it, and says so.
 

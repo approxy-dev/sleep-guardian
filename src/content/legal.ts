@@ -84,7 +84,7 @@ export const privacy: LegalPage = {
     {
       heading: 'Contact',
       paragraphs: [
-        'If anything on this page does not match what the software does when you run it, please say so at approxy-dev@gmail.com. That is a bug report and we would rather have it.',
+        'If anything on this page does not match what the software does when you run it, please say so at approxydev@gmail.com. That is a bug report and we would rather have it.',
       ],
     },
   ],
@@ -136,7 +136,7 @@ export const terms: LegalPage = {
       heading: 'Changes and contact',
       paragraphs: [
         'These terms may change as the software changes; the date at the top of the page shows when they were last revised.',
-        'Questions go to approxy-dev@gmail.com.',
+        'Questions go to approxydev@gmail.com.',
       ],
     },
   ],
@@ -214,7 +214,7 @@ export const security: LegalPage = {
     {
       heading: 'Reporting a problem',
       paragraphs: [
-        'If the software does something this page says it should not, email approxy-dev@gmail.com with what you did and what happened instead.',
+        'If the software does something this page says it should not, email approxydev@gmail.com with what you did and what happened instead.',
       ],
     },
   ],

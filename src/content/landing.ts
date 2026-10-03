@@ -345,7 +345,7 @@ export const contact = {
   heading: 'Questions or feedback?',
   lede: 'Approxy reads every message. Bug reports with the log from C:\\ProgramData\\SleepGuardian are the most useful thing you can send.',
   emailLabel: 'Email Approxy',
-  ctaLabel: 'approxy-dev@gmail.com',
+  ctaLabel: 'approxydev@gmail.com',
   promise: [
     'No support ticket queue, no account, no chatbot.',
     'If something does not match what this page says, that is a bug and we want to hear about it.',
