@@ -52,8 +52,19 @@ const siteUrl = (() => {
   return DEV_SITE_URL;
 })();
 
-/** Owner-supplied release URL. `null` until a public download location exists. */
-const downloadUrl: string | null = null;
+/**
+ * Owner-supplied release URL, pinned to the v1.10.2 GitHub release asset on the
+ * site repository. `null` until a public download location exists.
+ *
+ * Pinned rather than `releases/latest` on purpose: the link a visitor clicks
+ * must always resolve to the exact build the page describes, and must never
+ * silently start serving a newer one. GitHub serves the asset with
+ * `Content-Disposition: attachment`, which is what makes the browser save the
+ * file rather than navigate to it -- the HTML `download` attribute is ignored
+ * for cross-origin URLs.
+ */
+const downloadUrl: string | null =
+  'https://github.com/approxy-dev/sleep-guardian/releases/download/v1.10.2/SleepGuardianSetup_1.10.2.exe';
 
 export const siteConfig = {
   name: 'SleepGuardian',
