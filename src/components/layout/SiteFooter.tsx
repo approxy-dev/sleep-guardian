@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Mail } from 'lucide-react';
+import { Github, Mail } from 'lucide-react';
 import { MoonMark } from '@/components/ui/MoonMark';
 import { mailtoHref, siteConfig } from '@/config/site';
 
@@ -59,6 +59,13 @@ export function SiteFooter() {
               >
                 <Mail size={15} aria-hidden="true" />
                 {siteConfig.contactEmail}
+              </a>
+              <a
+                href={siteConfig.githubUrl}
+                className="mt-3 inline-flex items-center gap-2 text-sm text-sg-moon transition-colors hover:text-sg-platinum"
+              >
+                <Github size={15} aria-hidden="true" />
+                {siteConfig.developer} on GitHub
               </a>
             </div>
           </div>

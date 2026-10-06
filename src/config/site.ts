@@ -71,6 +71,13 @@ export const siteConfig = {
   tagline: 'Sleep on time. No excuses.',
   developer: 'Approxy',
   contactEmail: 'approxydev@gmail.com',
+
+  /**
+   * Owner's GitHub account, where the site source and the pinned release asset
+   * live. A public profile that has been verified rather than guessed, per the
+   * rule at the top of this file.
+   */
+  githubUrl: 'https://github.com/approxy-dev',
   siteUrl,
 
   /** Absolute download link, or `null` when the release is not published yet. */
