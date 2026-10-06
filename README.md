@@ -1,7 +1,7 @@
 # SleepGuardian website
 
 Marketing and documentation site for **SleepGuardian**, a Windows bedtime
-commitment device by Approxy.
+commitment device by [Approxy](https://github.com/approxy-dev).
 
 The site is a static Next.js App Router build. There is no database, no API
 route, no form handler, no analytics and no third-party script. The only
