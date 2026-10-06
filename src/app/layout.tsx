@@ -83,6 +83,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     >
       <head>
         {/*
+          Identity link back to the developer's GitHub profile. github.com has
+          no sitemap for user profiles, so an inbound anchor of this shape is
+          the only discovery path a crawler gets. `rel="me"` doubles as the
+          rel-me verification microformat used by IndieWeb identity providers.
+        */}
+        <link rel="me" href={siteConfig.githubUrl} />
+        {/*
           Resolve and apply the colour theme before first paint. Without this the
           page would render dark, then flash to light for anyone who chose it.
           The script only sets an attribute React does not manage, and
