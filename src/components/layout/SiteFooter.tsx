@@ -53,20 +53,26 @@ export function SiteFooter() {
               <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-sg-silver-soft">
                 Contact
               </p>
-              <a
-                href={mailtoHref}
-                className="sg-break mt-4 inline-flex items-center gap-2 text-sm text-sg-moon transition-colors hover:text-sg-platinum"
-              >
-                <Mail size={15} aria-hidden="true" />
-                {siteConfig.contactEmail}
-              </a>
-              <a
-                href={siteConfig.githubUrl}
-                className="mt-3 inline-flex items-center gap-2 text-sm text-sg-moon transition-colors hover:text-sg-platinum"
-              >
-                <Github size={15} aria-hidden="true" />
-                {siteConfig.developer} on GitHub
-              </a>
+              <ul className="mt-4 flex flex-col gap-2.5">
+                <li>
+                  <a
+                    href={mailtoHref}
+                    className="sg-break inline-flex items-center gap-2 text-sm text-sg-moon transition-colors hover:text-sg-platinum"
+                  >
+                    <Mail size={15} aria-hidden="true" />
+                    {siteConfig.contactEmail}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={siteConfig.githubUrl}
+                    className="inline-flex items-center gap-2 text-sm text-sg-moon transition-colors hover:text-sg-platinum"
+                  >
+                    <Github size={15} aria-hidden="true" />
+                    {siteConfig.developer} on GitHub
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
