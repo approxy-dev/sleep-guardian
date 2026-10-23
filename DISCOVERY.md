@@ -5,8 +5,8 @@ repository. This document is the audit trail: if a sentence in
 `src/content/` cannot be found here, it is marketing, not fact, and should be
 treated with suspicion.
 
-- **App repository:** `E:\SleepGuardian - Copy (2)` (read-only; never modified)
-- **Site repository:** `E:\sleepgurwe`
+- **App repository:** `E:\SleepGuardian ` (read-only; never modified)
+- **Site repository:** `E:\sleep-guardian`
 - **Method:** read the source, the XAML, the Inno Setup script and the shipped
   icon. No behaviour was inferred from a screenshot, and nothing was assumed
   from a similar product.
