@@ -15,6 +15,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check": "npm run typecheck && npm run lint && npm run format:check",
+    "test:seo": "node tools/check-seo.mjs",
     "brand:icons": "powershell -NoProfile -ExecutionPolicy Bypass -File ./tools/extract-brand-assets.ps1"
   },
   "dependencies": {

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { SectionHeading } from '@/components/ui/Primitives';
 import { ConfirmDialogMock } from '@/components/mockups/ConfirmDialogMock';
 import { CountdownMock } from '@/components/mockups/CountdownMock';
@@ -5,6 +6,7 @@ import { LockOverlayMock } from '@/components/mockups/LockOverlayMock';
 import { DashboardMock } from '@/components/mockups/DashboardMock';
 import { howItWorks, type Step } from '@/content/landing';
 import { sectionIds } from '@/config/site';
+import { pcCurfewGuide } from '@/content/pc-curfew-guide';
 
 function Visual({ kind }: { readonly kind: Step['visual'] }) {
   switch (kind) {
@@ -59,6 +61,14 @@ export function HowItWorks() {
             </li>
           ))}
         </ol>
+        <p className="mt-10 text-center text-base text-sg-silver-soft">
+          <Link
+            href={pcCurfewGuide.path}
+            className="text-sg-moon underline decoration-sg-moon/40 underline-offset-4 hover:decoration-sg-moon"
+          >
+            Read the Windows PC curfew setup guide
+          </Link>
+        </p>
       </div>
     </section>
   );

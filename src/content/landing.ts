@@ -30,9 +30,9 @@ export interface Step {
 }
 
 export const hero = {
-  eyebrow: 'A commitment device for Windows',
+  eyebrow: 'SleepGuardian · A Windows bedtime app',
   headline: ["Your PC won't let you", 'stay up.', "That's the point."],
-  lede: 'SleepGuardian shuts your computer down at bedtime and keeps it down until morning.',
+  lede: 'SleepGuardian sets a bedtime curfew for your Windows PC. It shuts your computer down on schedule and locks it until morning, with your sleep streaks stored locally.',
   primaryCta: 'Download for Windows',
   secondaryCta: 'See how it works',
   /** The countdown in the hero lock-overlay recreation. */
@@ -55,7 +55,7 @@ export const howItWorks: {
   readonly steps: readonly Step[];
 } = {
   eyebrow: 'How it works',
-  heading: 'Four steps, then it takes over',
+  heading: 'How SleepGuardian enforces your PC curfew',
   lede: 'You set the rule once. From then on the enforcement runs as a Windows service, not as an app you can close.',
   steps: [
     {

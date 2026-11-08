@@ -10,7 +10,8 @@
  *  - Editing this file is the only supported way to change product metadata.
  */
 
-const DEFAULT_SITE_URL = 'https://sleep-guardian-lake.vercel.app';
+const DEFAULT_SITE_URL = 'https://sleepguardian.vercel.app';
+const LEGACY_SITE_URL = 'https://sleep-guardian-lake.vercel.app';
 
 /**
  * Absolute origin, used for canonical URLs, sitemap entries, robots.txt and
@@ -41,7 +42,9 @@ const siteUrl = (() => {
     throw new Error('NEXT_PUBLIC_SITE_URL must be an absolute HTTP(S) origin without a path.');
   }
 
-  return url.origin;
+  // Old Vercel environments may still contain the retired domain. Its redirect
+  // must not become the canonical target of pages on the new public homepage.
+  return url.origin === LEGACY_SITE_URL ? DEFAULT_SITE_URL : url.origin;
 })();
 
 /**
@@ -70,6 +73,7 @@ export const siteConfig = {
    * rule at the top of this file.
    */
   githubUrl: 'https://github.com/approxy-dev',
+  repositoryUrl: 'https://github.com/approxy-dev/sleep-guardian',
   siteUrl,
 
   /** Absolute download link, or `null` when the release is not published yet. */

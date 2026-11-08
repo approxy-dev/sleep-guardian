@@ -4,7 +4,7 @@ import { DEFAULT_THEME, THEME_COLORS } from '@/config/theme';
 
 /** Page-level description and social copy. */
 export const meta = {
-  title: 'Windows PC Shutdown Timer & Bedtime App | SleepGuardian',
+  title: 'Windows PC Curfew & Bedtime Shutdown App | SleepGuardian',
   description:
     'Set a bedtime curfew on Windows with SleepGuardian. Schedule automatic PC shutdowns, stay locked out until morning, and track your sleep streaks locally.',
   ogAlt: 'SleepGuardian — a Windows bedtime commitment device by Approxy',

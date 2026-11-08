@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Github, Mail } from 'lucide-react';
 import { MoonMark } from '@/components/ui/MoonMark';
 import { mailtoHref, siteConfig } from '@/config/site';
+import { pcCurfewGuide } from '@/content/pc-curfew-guide';
 
 const legalLinks = [
   { label: 'Privacy', href: '/privacy' },
@@ -15,7 +16,7 @@ export function SiteFooter() {
   return (
     <footer className="mt-24 border-t border-sg-hairline">
       <div className="sg-shell py-14">
-        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-sm">
             <div className="flex items-center gap-2.5">
               <MoonMark size={26} />
@@ -31,6 +32,29 @@ export function SiteFooter() {
           </div>
 
           <div className="flex flex-col gap-8 sm:flex-row sm:gap-16">
+            <nav aria-label="Product resources">
+              <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-sg-silver-soft">
+                Resources
+              </p>
+              <ul className="mt-4 flex flex-col gap-2.5">
+                <li>
+                  <Link
+                    href={pcCurfewGuide.path}
+                    className="text-sm text-sg-silver-soft transition-colors hover:text-sg-platinum"
+                  >
+                    Windows PC curfew guide
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    href={siteConfig.repositoryUrl}
+                    className="text-sm text-sg-silver-soft transition-colors hover:text-sg-platinum"
+                  >
+                    SleepGuardian source on GitHub
+                  </a>
+                </li>
+              </ul>
+            </nav>
             <nav aria-label="Legal">
               <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-sg-silver-soft">
                 The small print

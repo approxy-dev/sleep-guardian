@@ -1,6 +1,6 @@
 # SleepGuardian website
 
-Marketing and documentation site for **SleepGuardian**, a Windows bedtime
+Marketing and documentation site for [SleepGuardian](https://sleepguardian.vercel.app), a Windows bedtime
 commitment device by [Approxy](https://github.com/approxy-dev).
 
 The site is a static Next.js App Router build. There is no database, no API
@@ -25,6 +25,7 @@ npm run dev          # http://localhost:3000
 | `npm run format`       | Prettier, write mode                                             |
 | `npm run format:check` | Prettier, verify only                                            |
 | `npm run check`        | typecheck + lint + format:check                                  |
+| `npm run test:seo`     | Verify generated SEO output after a production build             |
 | `npm run brand:icons`  | Regenerate the favicon and app icons from the app repo           |
 
 ## Layout
@@ -100,10 +101,15 @@ email to Approxy. When a URL exists:
 | `NEXT_PUBLIC_SITE_URL` | Optional | Absolute origin override for canonical URLs, OpenGraph URLs, `sitemap.xml`, `robots.txt` and JSON-LD |
 
 Copy `.env.example` to `.env.local` to override the domain. When unset, the site
-uses its verified production homepage, `https://sleep-guardian-lake.vercel.app`,
+uses its verified production homepage, `https://sleepguardian.vercel.app`,
 including in local and preview builds. This keeps canonical URLs, social links,
 the sitemap and structured data on one public origin. Supply an absolute HTTP(S)
 origin without a path, query or fragment; invalid values fail the build.
+
+The retired `sleep-guardian-lake.vercel.app` origin is mapped to the new domain
+even if an older Vercel environment still supplies it. Update that environment
+setting to the new origin as well when convenient; other custom origins remain
+supported.
 
 There are no other variables. There is no secret in this project, and nothing
 in `.env` is ever shipped to the browser except an explicitly `NEXT_PUBLIC_`
@@ -131,8 +137,9 @@ signal, not an indexing block; keep Vercel's preview indexing protection enabled
 The landing title and description in `src/content/meta.ts` describe the Windows
 PC shutdown and bedtime use case. `buildMetadata` supplies one canonical URL,
 OpenGraph and Twitter images with alt text, and Google preview directives for
-each public page. The sitemap lists the four public routes and omits automatic
-build timestamps, which would misrepresent when the content changed.
+each public page. The sitemap lists the landing page, setup guide and three
+legal routes. Only the dated guide has a maintained content-update date;
+automatic build timestamps are omitted.
 
 `src/lib/jsonld.ts` links `Organization`, `WebSite`, `WebPage` and
 `SoftwareApplication` entities through stable IDs. The graph is rendered only on
@@ -141,15 +148,31 @@ installer URL, operating system and image; it does not invent prices or reviews.
 Software-app rich results require genuine offer and review/rating information,
 so valid schema alone does not promise that search appearance.
 
+The Windows PC curfew guide at `/guides/windows-pc-curfew` has its own title,
+canonical, visible author and publication date, plus `Article` and
+`BreadcrumbList` data. It explains the choice between a Windows shutdown task
+and overnight curfew enforcement, with links to the product and security model.
+
 Fonts remain self-hosted through `next/font` with `display: swap`. Only the main
 Inter font is preloaded; the decorative monospaced font loads through CSS so it
 does not compete in the initial preload queue.
 
 After deployment, inspect the homepage in Google Search Console, submit
-`https://sleep-guardian-lake.vercel.app/sitemap.xml` (or the configured origin),
+`https://sleepguardian.vercel.app/sitemap.xml` (or the configured origin),
 and validate the markup with Google's Rich Results Test and Schema.org's
 validator. Search Console ownership and recrawl requests require the owner's
 account; publishing code does not submit or guarantee indexing.
+
+The owner-supplied Google ownership file is published unchanged at
+`/google9f3fb088d8fefe90.html`. Verify the URL-prefix property
+`https://sleepguardian.vercel.app/` using HTML file upload, then submit
+`sitemap.xml` in Search Console. Keep the file deployed after verification.
+
+Run `npm run build && npm run test:seo` to check generated canonical URLs,
+social metadata, internal links and anchors, JSON-LD references, crawler files,
+404 indexing rules, the verification file and the legacy-domain migration.
+See [the SEO audit and indexing steps](docs/seo-audit.md) for the keyword map
+and remaining account-level work.
 
 ## Before launch checklist
 
