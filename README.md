@@ -95,14 +95,15 @@ email to Approxy. When a URL exists:
 
 ## Environment variables
 
-| Variable               | Required      | Purpose                                                                                           |
-| ---------------------- | ------------- | ------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL` | In production | Absolute origin, used for canonical URLs, OpenGraph URLs, `sitemap.xml`, `robots.txt` and JSON-LD |
+| Variable               | Required | Purpose                                                                                              |
+| ---------------------- | -------- | ---------------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL` | Optional | Absolute origin override for canonical URLs, OpenGraph URLs, `sitemap.xml`, `robots.txt` and JSON-LD |
 
-Copy `.env.example` to `.env.local` for local work. If the variable is missing
-in a production build, the site falls back to `http://localhost:3000` and logs
-a warning at build time. This is deliberate: a wrong canonical is better than a
-build that silently points at a domain nobody owns. Set it before deploying.
+Copy `.env.example` to `.env.local` to override the domain. When unset, the site
+uses its verified production homepage, `https://sleep-guardian-lake.vercel.app`,
+including in local and preview builds. This keeps canonical URLs, social links,
+the sitemap and structured data on one public origin. Supply an absolute HTTP(S)
+origin without a path, query or fragment; invalid values fail the build.
 
 There are no other variables. There is no secret in this project, and nothing
 in `.env` is ever shipped to the browser except an explicitly `NEXT_PUBLIC_`
@@ -113,30 +114,51 @@ one.
 1. Push the repository to GitHub, GitLab or Bitbucket.
 2. In Vercel, **Add New → Project** and import it. The framework preset is
    detected as Next.js; leave the build command as `npm run build`.
-3. Under **Settings → Environment Variables**, add
-   `NEXT_PUBLIC_SITE_URL` with the production origin, e.g.
-   `https://sleepguardian.example`. Apply it to Production, Preview and
-   Development.
+3. If using a custom domain, set `NEXT_PUBLIC_SITE_URL` under **Settings →
+   Environment Variables** to its production origin. Apply the same public
+   origin to Production, Preview and Development, then rebuild.
 4. Deploy.
 
 No `vercel.json` is included because none is needed. Headers are already
 declared in `next.config.ts` and are applied on every route. If you need a
 deployment-level redirect or header rewrite later, add the file then.
 
-Preview builds will show `http://localhost:3000` as the canonical origin unless
-you also set the variable for the Preview environment. That is harmless — the
-pages are noindex-by-default in practice because the domain does not resolve —
-but set it anyway if you care about share previews.
+Preview builds keep the production canonical. A canonical is a consolidation
+signal, not an indexing block; keep Vercel's preview indexing protection enabled.
+
+## Search metadata and structured data
+
+The landing title and description in `src/content/meta.ts` describe the Windows
+PC shutdown and bedtime use case. `buildMetadata` supplies one canonical URL,
+OpenGraph and Twitter images with alt text, and Google preview directives for
+each public page. The sitemap lists the four public routes and omits automatic
+build timestamps, which would misrepresent when the content changed.
+
+`src/lib/jsonld.ts` links `Organization`, `WebSite`, `WebPage` and
+`SoftwareApplication` entities through stable IDs. The graph is rendered only on
+the homepage, where the product is described. It uses the published version,
+installer URL, operating system and image; it does not invent prices or reviews.
+Software-app rich results require genuine offer and review/rating information,
+so valid schema alone does not promise that search appearance.
+
+Fonts remain self-hosted through `next/font` with `display: swap`. Only the main
+Inter font is preloaded; the decorative monospaced font loads through CSS so it
+does not compete in the initial preload queue.
+
+After deployment, inspect the homepage in Google Search Console, submit
+`https://sleep-guardian-lake.vercel.app/sitemap.xml` (or the configured origin),
+and validate the markup with Google's Rich Results Test and Schema.org's
+validator. Search Console ownership and recrawl requests require the owner's
+account; publishing code does not submit or guarantee indexing.
 
 ## Before launch checklist
 
 The site ships in a state that is complete and safe to show, but three things
 must be true before it can be your public launch:
 
-- [ ] `NEXT_PUBLIC_SITE_URL` is set in Vercel (Production, Preview, and
-      Development). Until then every canonical, `sitemap.xml` entry, `robots.txt`
-      line and JSON-LD URL says `localhost`. The production build prints a warning
-      until it is set, so the gap is visible, not silent.
+- [ ] Canonical URLs, sitemap entries and JSON-LD use the intended public
+      origin. If moving off the default Vercel domain, set `NEXT_PUBLIC_SITE_URL`
+      consistently in Production, Preview and Development and rebuild.
 - [ ] `downloadUrl` in `src/config/site.ts` is set to the published installer
       URL. Until it is `null`, the download CTA intentionally sends people to email
       instead of a dead link. Setting it is a one-line change; every download

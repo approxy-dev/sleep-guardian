@@ -10,19 +10,16 @@
  *  - Editing this file is the only supported way to change product metadata.
  */
 
-const DEV_SITE_URL = 'http://localhost:3000';
+const DEFAULT_SITE_URL = 'https://sleep-guardian-lake.vercel.app';
 
 /**
  * Absolute origin, used for canonical URLs, sitemap entries, robots.txt and
  * JSON-LD.
  *
- * The production domain is not known, so it is never guessed. Set
- * `NEXT_PUBLIC_SITE_URL` in the deployment environment; until then the site
- * reports itself as `localhost`, which is wrong in production but visibly
- * wrong rather than silently pointing at a host nobody owns. A warning is
- * printed on the server (during `next build` and server renders) so the gap is
- * impossible to miss; it is deliberately never printed in the browser, where it
- * would only clutter a visitor's console.
+ * Default to the verified production homepage listed on the GitHub repository.
+ * `NEXT_PUBLIC_SITE_URL` can override it when the public domain changes. Local
+ * and preview builds keep the production canonical instead of advertising
+ * localhost or competing preview URLs to search engines.
  *
  * `process.env.NEXT_PUBLIC_SITE_URL` must be read as a literal property access.
  * Reading it through a captured `process.env` object stops Next from inlining
@@ -30,26 +27,21 @@ const DEV_SITE_URL = 'http://localhost:3000';
  * client bundle and crashes hydration with "process is not defined".
  */
 const siteUrl = (() => {
-  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim() || DEFAULT_SITE_URL;
+  const url = new URL(configured);
 
-  if (configured) {
-    return configured.replace(/\/+$/, '');
+  if (
+    !['https:', 'http:'].includes(url.protocol) ||
+    url.username ||
+    url.password ||
+    url.pathname !== '/' ||
+    url.search ||
+    url.hash
+  ) {
+    throw new Error('NEXT_PUBLIC_SITE_URL must be an absolute HTTP(S) origin without a path.');
   }
 
-  if (process.env.NODE_ENV === 'production' && typeof window === 'undefined') {
-    const flag = '__sleepguardianSiteUrlWarned';
-    const scope = globalThis as Record<string, unknown>;
-    if (!scope[flag]) {
-      scope[flag] = true;
-      console.warn(
-        '[sleepguardian] NEXT_PUBLIC_SITE_URL is not set, so canonical URLs, ' +
-          'sitemap.xml, robots.txt and JSON-LD will use ' +
-          `${DEV_SITE_URL}. Set it in the deployment environment before launch.`,
-      );
-    }
-  }
-
-  return DEV_SITE_URL;
+  return url.origin;
 })();
 
 /**

@@ -8,10 +8,17 @@ import { Hero } from '@/components/sections/Hero';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { Problem } from '@/components/sections/Problem';
 import { WhoItsFor } from '@/components/sections/WhoItsFor';
+import { landingPageJsonLd } from '@/lib/jsonld';
 
 export default function LandingPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(landingPageJsonLd()).replace(/</g, '\\u003c'),
+        }}
+      />
       <Hero />
       <Problem />
       <HowItWorks />

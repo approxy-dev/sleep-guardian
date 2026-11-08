@@ -6,7 +6,6 @@ import { SiteHeader } from '@/components/layout/SiteHeader';
 import { buildMetadata, meta, themeColors } from '@/content/meta';
 import { siteConfig } from '@/config/site';
 import { themeInitScript } from '@/config/theme';
-import { softwareApplicationJsonLd } from '@/lib/jsonld';
 import './globals.css';
 
 /**
@@ -26,6 +25,8 @@ const inter = Inter({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   display: 'swap',
+  // Keep the decorative countdown font out of the critical preload queue.
+  preload: false,
   weight: ['400', '600', '700'],
   variable: '--font-jetbrains-mono',
 });
@@ -48,22 +49,6 @@ export const metadata: Metadata = {
       { url: '/brand/app-64.png', sizes: '64x64', type: 'image/png' },
     ],
     apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
-  },
-  openGraph: {
-    ...buildMetadata({ title: meta.title, description: meta.description }).openGraph,
-    images: [
-      {
-        url: '/og/opengraph-image.png',
-        width: 1200,
-        height: 630,
-        alt: meta.ogAlt,
-        type: 'image/png',
-      },
-    ],
-  },
-  twitter: {
-    ...buildMetadata({ title: meta.title, description: meta.description }).twitter,
-    images: ['/og/opengraph-image.png'],
   },
 };
 
@@ -96,11 +81,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           `suppressHydrationWarning` on <html> acknowledges that.
         */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-        <script
-          type="application/ld+json"
-          // Static, developer-authored object with no user input.
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationJsonLd()) }}
-        />
       </head>
       <body className="min-h-dvh antialiased">
         <SkipLink />

@@ -2,25 +2,22 @@ import type { MetadataRoute } from 'next';
 import { siteConfig } from '@/config/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
+  // Omit lastModified until a genuine content-update date is maintained.
+  // Rebuilding the site does not mean that every page has changed.
   return [
-    { url: `${siteConfig.siteUrl}/`, lastModified: now, changeFrequency: 'monthly', priority: 1 },
+    { url: `${siteConfig.siteUrl}/`, changeFrequency: 'monthly', priority: 1 },
     {
       url: `${siteConfig.siteUrl}/security`,
-      lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       url: `${siteConfig.siteUrl}/privacy`,
-      lastModified: now,
       changeFrequency: 'yearly',
       priority: 0.4,
     },
     {
       url: `${siteConfig.siteUrl}/terms`,
-      lastModified: now,
       changeFrequency: 'yearly',
       priority: 0.4,
     },

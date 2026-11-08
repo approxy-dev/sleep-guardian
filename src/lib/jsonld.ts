@@ -1,29 +1,72 @@
 import { siteConfig } from '@/config/site';
+import { meta } from '@/content/meta';
 
 /**
- * JSON-LD for the product.
- *
- * Every commercial field is omitted on purpose. This site distributes nothing
- * for money and has no storefront, so there is no monetary field to describe
- * and inventing one would be a fabrication. `offers` and the
- * `isAccessibleForFree` companion flag are both left out together, since
- * structured-data software rich results require an offer or a rating and
- * neither applies here.
+ * Describe the homepage and its product with linked, stable entity IDs.
+ * Keep this graph on the landing page: legal pages are not app listings.
+ * Pricing and ratings are omitted because the page makes no such claims.
+ * Software rich-result eligibility requires genuine review/offer information;
+ * this graph describes the product without inventing that information.
  */
-export function softwareApplicationJsonLd() {
+export function landingPageJsonLd() {
+  const url = `${siteConfig.siteUrl}/`;
+  const organizationId = `${url}#organization`;
+  const websiteId = `${url}#website`;
+  const webpageId = `${url}#webpage`;
+  const softwareId = `${url}#software`;
+
   return {
     '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: siteConfig.name,
-    description:
-      'A Windows commitment device that shuts your PC down at bedtime and locks the screen until your wake time.',
-    applicationCategory: 'UtilitiesApplication',
-    operatingSystem: siteConfig.supportedOS ?? 'Windows',
-    url: siteConfig.siteUrl,
-    author: {
-      '@type': 'Organization',
-      name: siteConfig.developer,
-    },
-    softwareRequirements: siteConfig.supportedOS ?? 'Windows',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': organizationId,
+        name: siteConfig.developer,
+        url: siteConfig.githubUrl,
+        sameAs: [siteConfig.githubUrl],
+      },
+      {
+        '@type': 'WebSite',
+        '@id': websiteId,
+        name: siteConfig.name,
+        url,
+        inLanguage: 'en',
+        publisher: { '@id': organizationId },
+      },
+      {
+        '@type': 'WebPage',
+        '@id': webpageId,
+        name: meta.title,
+        description: meta.description,
+        url,
+        inLanguage: 'en',
+        isPartOf: { '@id': websiteId },
+        mainEntity: { '@id': softwareId },
+        primaryImageOfPage: {
+          '@type': 'ImageObject',
+          url: `${siteConfig.siteUrl}/og/opengraph-image.png`,
+          width: 1200,
+          height: 630,
+          caption: meta.ogAlt,
+        },
+      },
+      {
+        '@type': 'SoftwareApplication',
+        '@id': softwareId,
+        name: siteConfig.name,
+        description: meta.description,
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: siteConfig.supportedOS,
+        softwareRequirements: siteConfig.supportedOS,
+        softwareVersion: siteConfig.appVersion,
+        fileSize: siteConfig.fileSize,
+        ...(siteConfig.downloadUrl ? { downloadUrl: siteConfig.downloadUrl } : {}),
+        image: `${siteConfig.siteUrl}/brand/app-256.png`,
+        url,
+        mainEntityOfPage: { '@id': webpageId },
+        author: { '@id': organizationId },
+        publisher: { '@id': organizationId },
+      },
+    ],
   };
 }
