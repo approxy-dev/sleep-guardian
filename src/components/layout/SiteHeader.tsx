@@ -61,7 +61,9 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <DownloadButton size="sm" className="hidden sm:inline-flex" />
+          <div className="hidden sm:block">
+            <DownloadButton size="sm" />
+          </div>
 
           <ThemeToggle />
 
