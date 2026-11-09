@@ -2,7 +2,7 @@ import { Mail } from 'lucide-react';
 import { Eyebrow, Panel } from '@/components/ui/Primitives';
 import { Reveal } from '@/components/ui/Reveal';
 import { contact } from '@/content/landing';
-import { mailtoHref, sectionIds, siteConfig } from '@/config/site';
+import { mailtoHref, sectionIds } from '@/config/site';
 
 /**
  * Contact.
@@ -38,11 +38,8 @@ export function Contact() {
               className="mt-8 inline-flex items-center gap-2.5 rounded-full bg-sg-amber px-6 py-3.5 text-[0.9375rem] font-semibold text-sg-amber-text transition-colors hover:bg-sg-amber-lift"
             >
               <Mail size={18} strokeWidth={2.25} aria-hidden="true" />
-              {contact.ctaLabel}
+              Send feedback or bug report
             </a>
-            <p className="sg-break mt-3 font-mono text-sm text-sg-silver-soft">
-              {siteConfig.contactEmail}
-            </p>
 
             <ul className="mx-auto mt-9 grid max-w-lg gap-2.5 border-t border-sg-hairline pt-7 text-left text-[0.875rem] text-sg-silver-soft">
               {contact.promise.map((line) => (
