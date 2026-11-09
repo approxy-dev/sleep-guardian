@@ -48,7 +48,7 @@ const siteUrl = (() => {
 })();
 
 /**
- * Owner-supplied release URL, pinned to the v1.10.2 GitHub release asset on the
+ * Owner-supplied release URL, pinned to the v1.10.3 GitHub release asset on the
  * site repository. `null` until a public download location exists.
  *
  * Pinned rather than `releases/latest` on purpose: the link a visitor clicks
@@ -59,13 +59,13 @@ const siteUrl = (() => {
  * for cross-origin URLs.
  */
 const downloadUrl: string | null =
-  'https://github.com/approxy-dev/sleep-guardian/releases/download/v1.10.2/SleepGuardianSetup_1.10.2.exe';
+  'https://github.com/approxy-dev/sleep-guardian/releases/download/v1.10.3/SleepGuardianSetup_1.10.3.exe';
 
 export const siteConfig = {
   name: 'SleepGuardian',
   tagline: 'Sleep on time. No excuses.',
   developer: 'Approxy',
-  contactEmail: 'approxydev@gmail.com',
+  contactEmail: 'approxy-dev@gmail.com',
 
   /**
    * Owner's GitHub account, where the site source and the pinned release asset
@@ -80,8 +80,8 @@ export const siteConfig = {
   downloadUrl,
 
   /** Product facts. `null` renders nothing. */
-  appVersion: '1.10.2',
-  fileName: 'SleepGuardianSetup_1.10.2.exe',
+  appVersion: '1.10.3',
+  fileName: 'SleepGuardianSetup_1.10.3.exe',
   fileSize: '125 MB',
   supportedOS: 'Windows 10 or later, 64-bit',
 

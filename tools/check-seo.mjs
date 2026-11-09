@@ -83,8 +83,8 @@ for (const [route, html] of pages) {
     checkRefs(schema);
     if (route === '/') {
       const app = schema['@graph'].find((entity) => entity['@type'] === 'SoftwareApplication');
-      assert.equal(app.softwareVersion, '1.10.2');
-      assert.ok(app.downloadUrl.endsWith('/v1.10.2/SleepGuardianSetup_1.10.2.exe'));
+      assert.equal(app.softwareVersion, '1.10.3');
+      assert.ok(app.downloadUrl.endsWith('/v1.10.3/SleepGuardianSetup_1.10.3.exe'));
       assert.ok(
         !('offers' in app) && !('aggregateRating' in app),
         'No invented commercial or review claims',
