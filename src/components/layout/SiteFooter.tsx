@@ -90,10 +90,11 @@ export function SiteFooter() {
                 <li>
                   <a
                     href={siteConfig.githubUrl}
+                    rel="me"
                     className="inline-flex items-center gap-2 text-sm text-sg-moon transition-colors hover:text-sg-platinum"
                   >
                     <Github size={15} aria-hidden="true" />
-                    {siteConfig.developer} on GitHub
+                    {siteConfig.developer} (@approxy-dev) on GitHub
                   </a>
                 </li>
               </ul>
